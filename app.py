@@ -15,15 +15,16 @@ def appsearch():
    if request.method == 'GET':
       return render_template('search.html')
    elif request.method == 'POST':
-      return redirect(url_for('search_result'))
+      search_tb= request.form['sr']
+      res,result=search(search_tb)
+      #print res
+      res=app_details(result)
+      return render_template('searchResult.html', name=res)
+      #return redirect(url_for('search_result'))
 
 @app.route('/searchResult', methods=['POST','GET'])
 def search_result():
-   search_tb= request.form['sr']
-   res,result=search(search_tb)
-   res=app_details(result)
-   return render_template('searchResult.html', name=res) 
-   
+    return render_template('searchResult.html', name = {})   
 
 
 @app.route('/similarApp')
@@ -35,4 +36,4 @@ def comparing():
     return render_template('compare.html')   
 
 if __name__ == '__main__':
-   app.run()
+   app.run(debug=True)
