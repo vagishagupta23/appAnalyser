@@ -26,6 +26,7 @@ def search(name):
     #for i in l:
         #t=i.get('data-docid')
     print(l)
+    print(s.select_one('a.title'))
     title = s.select_one('a.title').attrs['title']#title
     print("title: "+title)
     App['title']=title
