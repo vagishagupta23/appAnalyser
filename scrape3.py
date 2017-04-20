@@ -43,8 +43,9 @@ def app_details(pagesoup):
     des=pagesoup.findAll("div",{"jsname":"C4s9Ed"})#description
     descrip=''
     for d in des:
+        #print(d)
         description=d.get_text().strip()
-        print(description+"\n")
+        print(description)
         descrip=descrip+description
     App['Desc']=descrip
     rating=pagesoup.findAll("div",{"class":"score"})#current rating 
