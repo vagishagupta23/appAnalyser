@@ -1,10 +1,10 @@
 from flask import Flask, render_template, request, redirect, session, url_for
-from flask_images import resized_img_src
-from PIL import Image
+#from flask_images import resized_img_src
+#from PIL import Image
 import scrape3
 app = Flask(__name__)
-app.secret_key="fuck up"
-images = Images(app)
+app.secret_key="whats up"
+#image=Images(app)
 
 @app.route("/")
 def main():
@@ -39,20 +39,21 @@ def search_result():
 
 @app.route('/similarApp', methods=['POST','GET'])
 def appsimilar():
+   #session['appname'] = 0
    if request.method == 'GET':
       return render_template('similar.html')
    elif request.method == 'POST':
       searchtb= request.form['tb']
-      session['app_name']=searchtb
+      session['appname']=searchtb
    return redirect(url_for('similar_result'))
 
 @app.route('/similarResult', methods=['POST','GET'])
 def similar_result():
-   aname=session['app_name']
-   res,result=scrape3.search(aname)
+   anme=session['appname']
+   rest,results=scrape3.search(anme)
    #print res
-   res=scrape3.SimilarApps(result)
-   return render_template('similarResult.html', name =res)   
+   rest=scrape3.SimilarApps(results)
+   return render_template('similarResult.html', name =rest)   
 
 @app.route('/appCompare')
 def comparing():
