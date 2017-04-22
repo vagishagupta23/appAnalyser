@@ -25,15 +25,15 @@ def search(name):
     l=s.find("div",{"class":"card no-rationale square-cover apps small"}).get('data-docid')
     #for i in l:
         #t=i.get('data-docid')
-    print(l)
-    print(s.select_one('a.title'))
+    #print(l)
+    #print(s.select_one('a.title'))
     title = s.select_one('a.title').attrs['title']#title
     print("title: "+title)
     App['title']=title
     
     plink="https://play.google.com/store/apps/details?id="+l
     query2=requests.get('https://play.google.com/store/apps/details?id='+l,headers)#app details
-    print("the url :"+plink)
+    #print("the url :"+plink)
     global pagesoup
     pagesoup=BeautifulSoup(query2.text,"html.parser")
     #print(pagesoup.prettify())
@@ -46,7 +46,7 @@ def app_details(pagesoup):
     for d in des:
         #print(d)
         description=d.get_text().strip()
-        print(description)
+        #print(description)
         descrip=descrip+description
     App['Desc']=descrip
     rating=pagesoup.findAll("div",{"class":"score"})#current rating 
@@ -58,7 +58,7 @@ def app_details(pagesoup):
     for image in imgurl:
         iu=image.get('src')
     imageurl="https:"+iu
-    print("Image URL: "+imageurl)
+    #print("Image URL: "+imageurl)
     App['ImageUrl']=imageurl
     try:                                                            #price
         price = pagesoup.select_one('span.display-price').string
@@ -73,7 +73,7 @@ def app_details(pagesoup):
     free = (price == 'Free')
     if free is True:
         price = '0'
-    print("Price: Rs."+price)
+    #print("Price: Rs."+price)
     App['Price']=price
     category = [c.attrs['href'].split('/')[-1] for c in pagesoup.select('.category')]#category
     App['category']=category
@@ -192,7 +192,7 @@ def SimilarApps(pagesoup):
     title = Spagesoup.select('a.title')
     print(title[1].get('title'))
     i=0
-    
+    Simi=[]
     sameapp=Spagesoup.findAll("a",{"data-uitype":"500"})#links of all similar apps
     for sa in sameapp:
         title = Spagesoup.select('a.title')
@@ -201,9 +201,12 @@ def SimilarApps(pagesoup):
         simiLink="https://play.google.com"+slink
         query4=requests.get(simiLink,headers)
         Appsoup=BeautifulSoup(query4.text,'html.parser')
-        app_details(Appsoup)
+        Simi.append(app_details(Appsoup))
         i=i+1
-    
+        if i==10:
+            break
+    #print(Simi)
+    return(Simi)
     
 def top_App(category):
     n='0'
