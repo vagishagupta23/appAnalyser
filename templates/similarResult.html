@@ -22,12 +22,35 @@
             <h3 class="text-muted">App Analyser</h3>
         </div>
 <div class="jumbotron">
-{% for key,value in name.iteritems() %}
-<table>
+{% for result in name %}
+	{{ result[0][2] }}
+           <!-- <tr>
+                <p><td>{{ result[0][1] }}</td></p>
+                <p><td>{{ result[1] }}</td></p>
+                <p><td>{{ result[2] }}</td></p>
+				<p><td>{{ result[3] }}</td></p>
+                <p><td>{{ result[4] }}</td></p>
+            </tr>-->
+{% endfor %}
+<!--{% for result in name[1] %}
+<p>{{ result }}</p>
+{% endfor %}
+{% for result in name[2] %}
+<p>{{ result }}</p>
+{% endfor %}
+{% for result in name[3] %}
+<p>{{ result }}</p>
+{% endfor %}
+{% for result in name[4] %}
+<p>{{ result }}</p>
+{% endfor %}
+{% for result in name[5] %}
+<p>{{ result }}</p>
+{% endfor %}-->
+<!--<table>
 <tr>
 <th> {{ key }} </th>
-<td> {{ value }}</td>
-{% endfor %}
+<td> {{ value }}</td>-->
 </div>
 </div>
 </body>
