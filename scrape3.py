@@ -52,7 +52,7 @@ def app_details(pagesoup):
     rating=pagesoup.findAll("div",{"class":"score"})#current rating 
     for rate in rating:
         zz=rate.get_text()
-        print("Rating out of 5 = "+zz+"\n")
+        #print("Rating out of 5 = "+zz+"\n")
     App['Rating']=zz
     imgurl=pagesoup.findAll("img",{"class":"cover-image","alt":"Cover art"})#img url
     for image in imgurl:
@@ -83,16 +83,16 @@ def app_details(pagesoup):
 
     
    
-    #return(pagesoup)
+    #return(pagesoup)'''
 
-def appReviews(pagesoup):
+'''def appReviews(pagesoup):
     index=1
     rev=pagesoup.findAll("div",{"class":"review-text","class":"review-body with-review-wrapper"})#40 top reviews
     for review in rev:
         yy=review.get_text()
         yy=yy[:-13]
         print(str(index)+"."+yy)
-        index+=1
+        index+=1'''
 
 def AdditionalInfo(pagesoup):
     addinf=pagesoup.findAll("div",{"class":"details-section metadata"})#additional info
@@ -193,19 +193,38 @@ def SimilarApps(pagesoup):
     print(title[1].get('title'))
     i=0
     Simi=[]
+    Simi.append([])
+    Simi.append([])
+    Simi.append([])
+    Simi.append([])
+    Simi.append([])
     sameapp=Spagesoup.findAll("a",{"data-uitype":"500"})#links of all similar apps
     for sa in sameapp:
         title = Spagesoup.select('a.title')
-        print(title[i].get('title'))
+        #print(title[i].get('title'))
+        t=title[i].get('title')
         slink=sa.get('href')
         simiLink="https://play.google.com"+slink
         query4=requests.get(simiLink,headers)
         Appsoup=BeautifulSoup(query4.text,'html.parser')
-        Simi.append(app_details(Appsoup))
+        temp=app_details(Appsoup)
+        temp['title']=t
+        #print("***********"+str(temp)+"*************")
+        #Simi.append(temp)
+        Simi[i].append(temp['category'])
+        Simi[i].append(temp['title'])
+        Simi[i].append(temp['Price'])
+        Simi[i].append(temp['Rating'])
+        Simi[i].append(temp['ImageUrl'])
+        Simi[i].append(temp['Desc'])
+        #print(Simi[i])
         i=i+1
-        if i==10:
+        if i==5:
             break
     #print(Simi)
+    '''
+    for i in range(0,5):
+        print(Simi[i]) '''
     return(Simi)
     
 def top_App(category):
@@ -363,11 +382,11 @@ if __name__ == "__main__":
     
     
     res=search(name)
-    res=app_details(pagesoup)
-    appReviews(pagesoup)
-    res=AdditionalInfo(pagesoup)
+    #res=app_details(pagesoup)
+    #appReviews(pagesoup)
+    #res=AdditionalInfo(pagesoup)
     print(res)
-    simi=SimilarApps(pagesoup)
+    #simi=SimilarApps(pagesoup)
     print("Select category")
     print("1.Education")
     print("2.Social")
