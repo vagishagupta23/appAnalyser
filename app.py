@@ -45,7 +45,7 @@ def appsimilar():
    elif request.method == 'POST':
       searchtb= request.form['tb']
       session['appname']=searchtb
-   return redirect(url_for('similar_result'))
+      return redirect(url_for('similar_result'))
 
 @app.route('/similarResult', methods=['POST','GET'])
 def similar_result():
@@ -53,7 +53,11 @@ def similar_result():
    rest,results=scrape3.search(anme)
    #print res
    rest=scrape3.SimilarApps(results)
-   return render_template('similarResult.html', name =rest)   
+   return render_template('similarResult.html', name =rest)
+
+@app.route('/topApp')
+def top_app():
+    return render_template('topApp.html')
 
 @app.route('/appCompare')
 def comparing():
